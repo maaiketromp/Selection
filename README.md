@@ -2,22 +2,21 @@
 A generic SelectionClass that generates a list of objects with a data source and factory.
 
 This solution is part of a webbase framework, made as an assingment for a Software Development course.
-It is a demonstration of how the factory pattern can be implemented.
+It is a also a demonstration of how the factory pattern can be implemented in relation to other classes.
 
 # Problem
-For a content management system I need a way to create new forms, edit existing forms on a website.
-I also need a way to create new menu items for the same website.
-The database stores meta data for these formfields, menuitems and more.
-Now I make Lists of Formfields and lists of MenuItems, but I would like a generic solution, that quickly and easily makes a collection for me.
+The backend of my content management application needs to create several selections of objects. These objects display forms, tables, menu items and more general, any element on a page. Data and meta-data for these elements is stored in a database. Now the programmer needs a way to get this information from the database and store it in the appropriate object, and place this object in a list. He could make a MenuItemModel, ElementModel, DisplayModel and dito factories, and solve the problem in custom code. That would mean slightly different code in each individual case. That is a bad idea, that calls for a generic solution that unites model and factory and produces a list of objects.
 
 # Requirements
-The selection needs to be generic.
+The selection needs to be generic, with a generic type parameter, indicating which type is in the selection.
 The selection of type T takes a factory and model with type parameter T to create the selection.
 The selection will contain a property SelectionList, that can be retrieved after the Selection object is instantiated.
 
 # Solution
-A generic Selectionclass constructor takes a model and factory as arguments.
-In the constructor the selection is formed.
-The model has one method: getSelection, that returns a query resultobject called IResultTable
-For each row in the ResultTable the getInstance method of the factory is called, and returns a newly instantiated and populated object.
+The Selectionclass is a class with a generic type parameter that takes a model and factory as dependency injections.
+1. The selection is formed in a private initialization function in the class.
+1. The model has an interface that determines the format of the information returned from the database.
+1. The factory provides for each row of data the corresponding object, and the data is put in the object. 
+1. The list of objects is then stored in the selection, to be retrieved when needed.
+
 
